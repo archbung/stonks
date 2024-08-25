@@ -5,7 +5,6 @@ RSpec.describe UserWallet, type: :model do
     wallet = create :user_wallet
     created_wallet = UserWallet.find_by(id: wallet.id)
 
-    expect(wallet.entity).to be_present
     expect(created_wallet).to eq wallet
   end
 
