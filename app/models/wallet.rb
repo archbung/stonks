@@ -1,4 +1,7 @@
 class Wallet < ApplicationRecord
+  has_secure_password
+
+  validates :email, presence: true, uniqueness: true
   validates_numericality_of :balance, greater_than_or_equal_to: 0, on: [ :create ]
 
   has_many :sent_transactions, class_name: "Transaction", foreign_key: "source_wallet_id"
