@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_08_25_063123) do
+ActiveRecord::Schema[7.2].define(version: 2024_08_25_072351) do
   create_table "entities", force: :cascade do |t|
     t.string "name", null: false
     t.string "type", null: false
@@ -33,6 +33,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_25_063123) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "entity_id", null: false
+    t.string "type", null: false
     t.index ["entity_id"], name: "index_wallets_on_entity_id"
   end
 
