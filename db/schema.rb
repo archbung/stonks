@@ -10,11 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_08_25_054807) do
+ActiveRecord::Schema[7.2].define(version: 2024_08_25_061735) do
   create_table "entities", force: :cascade do |t|
     t.string "name", null: false
     t.string "type", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "wallets", force: :cascade do |t|
+    t.decimal "balance", precision: 16, scale: 2, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "entity_id", null: false
+    t.index ["entity_id"], name: "index_wallets_on_entity_id"
+  end
+
+  add_foreign_key "wallets", "entities"
 end
