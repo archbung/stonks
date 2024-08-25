@@ -5,6 +5,11 @@ class Wallet < ApplicationRecord
   has_many :sent_transactions, class_name: "Transaction", foreign_key: "source_wallet_id"
   has_many :received_transactions, class_name: "Transaction", foreign_key: "destination_wallet_id"
 
+  def initialize(*args)
+    raise "Cannot directly instantiate an abstract class #{self.class}" if self.instance_of?(Wallet)
+    super
+  end
+
   def transfer(to:, amount:)
     return unless self.balance >= amount
 
