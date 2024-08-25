@@ -1,2 +1,0 @@
-class Team < Entity
-end
