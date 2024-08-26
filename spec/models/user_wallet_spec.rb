@@ -10,7 +10,7 @@ RSpec.describe UserWallet, type: :model do
 
   it "can transfer money to a different wallet" do
     source_wallet = create :user_wallet
-    destination_wallet = create :user_wallet
+    destination_wallet = create :user_wallet, email: "kaesangp"
 
     source_wallet.transfer(to: destination_wallet, amount: 50_000)
     transaction = Transaction.find_by(source_wallet_id: source_wallet.id)
@@ -22,15 +22,17 @@ RSpec.describe UserWallet, type: :model do
 
   it "can calculate cumulative_balance" do
     source_wallet = create :user_wallet
-    destination_wallet = create :user_wallet
+    destination_wallet = create :user_wallet, email: "kaesangp"
+    third_wallet = create :user_wallet, email: "gibranrk"
 
     source_wallet.transfer(to: destination_wallet, amount: 50_000)
     source_wallet.transfer(to: destination_wallet, amount: 50_000)
+    third_wallet.transfer(to: source_wallet, amount: 25_000)
 
-    first_transaction = Transaction.where(source_wallet_id: source_wallet.id).first
-    second_transaction = Transaction.where(source_wallet_id: source_wallet.id).last
+    trx = Transaction.where("source_wallet_id = #{source_wallet.id} OR destination_wallet_id = #{source_wallet.id}")
 
-    expect(source_wallet.balance_at(datetime: first_transaction.created_at)).to eq 50_000
-    expect(source_wallet.balance_at(datetime: second_transaction.created_at)).to eq 0
+    expect(source_wallet.balance_at(datetime: trx[0].created_at)).to eq 50_000
+    expect(source_wallet.balance_at(datetime: trx[1].created_at)).to eq 0
+    expect(source_wallet.balance_at(datetime: trx[2].created_at)).to eq 25_000
   end
 end

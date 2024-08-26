@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_08_25_084913) do
+ActiveRecord::Schema[7.2].define(version: 2024_08_26_004624) do
   create_table "transactions", force: :cascade do |t|
     t.decimal "amount", precision: 16, scale: 2, null: false
     t.datetime "created_at", null: false
@@ -18,6 +18,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_25_084913) do
     t.integer "source_wallet_id", null: false
     t.integer "destination_wallet_id", null: false
     t.decimal "source_cumulative_balance", precision: 16, scale: 2
+    t.decimal "destination_cumulative_balance", precision: 16, scale: 2
     t.index ["destination_wallet_id"], name: "index_transactions_on_destination_wallet_id"
     t.index ["source_wallet_id"], name: "index_transactions_on_source_wallet_id"
   end
